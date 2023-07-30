@@ -1,9 +1,12 @@
 import React, { useContext } from 'react'
 import UserContext from '../Context'
+import { useDispatch, useSelector } from 'react-redux'
+import { decrement, increment } from '../redux/feature'
 
 function Card(props) {
     const user = useContext(UserContext)
-    
+    const count = useSelector((state)=>state.counter.value)
+  const dispatch = useDispatch()
   return (
     <div className='container'>
         <h5>{user}</h5>
@@ -24,6 +27,11 @@ function Card(props) {
 
                 }
             </div>
+            <div>
+      <button className='btn btn-sm btn-outline-danger m-2' onClick={()=>dispatch(decrement())}>-</button>
+      {count}
+      <button className='btn btn-sm btn-outline-primary m-2' onClick={()=>dispatch(increment())}>+</button>
+    </div>
         </div>
   )
 }
