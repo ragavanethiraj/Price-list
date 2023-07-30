@@ -10,6 +10,8 @@ import Card from './Components/Card';
 import Form from './Components/Form';
 import StudentList from './Components/StudentList';
 import StudentView from './Components/StudentView';
+import Features from './Components/Features';
+import { UseProvider } from './Context';
 function App() {
   const result = [{
     Name: 'Dev Team',
@@ -34,6 +36,7 @@ function App() {
 ]
   return (
     <BrowserRouter>
+    <UseProvider value={"Guhan"}>
     <Menu/>
       <Routes>
         <Route path='/home' element={<Home/>} >
@@ -41,11 +44,13 @@ function App() {
             <Route path='profile' element={<Profile/>}/>
             <Route path='setting' element={<Settings/>}/>
         </Route>
+        <Route path='/Features' element={<Features/>} />
         <Route path='/price' element={<Pricing/>} />
         <Route path='/form' element={<Form/>} />
         <Route path='/student' element={<StudentList/>} />
         <Route path='/student/:id' element={<StudentView/>} />
       </Routes>
+      </UseProvider>
     </BrowserRouter>
     // <div className="App">
     //   <div className='container'> 
@@ -57,7 +62,7 @@ function App() {
     //   </div>
     //   <Pricing/>
     // </div>
-    // </div>
+    // </div>//
 
   );
 }

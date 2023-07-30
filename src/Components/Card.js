@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import UserContext from '../Context'
 
 function Card(props) {
+    const user = useContext(UserContext)
     
   return (
     <div className='container'>
+        <h5>{user}</h5>
             <div className='row'>
                 {
                     props.data.map((item) => {

@@ -2,10 +2,13 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Toaster, toast } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 
 function StudentList() {
     const [student,setStudent]=useState([])
     const navigate = useNavigate()
+    const [modal,setModal]=useState(false)
+    const[studentEdit,setStudentEdit]=useState({})
 
     useEffect(()=>{
         fetchStudentList()
@@ -31,6 +34,24 @@ function StudentList() {
        fetchStudentList()
     }
    }
+
+   const handleEdit =(item)=>{
+    setStudentEdit(item)
+        setModal(!modal)
+   }
+
+   const handleChange = (e) => {
+    setStudentEdit((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+}
+
+const handleUpdate =async()=>{
+    const res =await axios.put(`https://64bb5c2a5e0670a501d6f469.mockapi.io/student/${studentEdit.id}`,studentEdit)
+    if(res.status===200){
+        toast.success("Updated successfully")
+        setModal(!modal)
+        fetchStudentList()
+    }
+}
 
     return (
         <div className='container'>
@@ -58,7 +79,7 @@ function StudentList() {
                             <td>{list.email}</td>
                             <td>
                                 <button className='btn btn-sm btn-outline-primary' onClick={()=>viewStudent(list.id)}>View</button>
-                                <button className='btn btn-sm btn-outline-warning'>Edit</button>
+                                <button className='btn btn-sm btn-outline-warning' onClick={()=>handleEdit(list)}>Edit</button>
                                 <button className='btn btn-sm btn-outline-danger' onClick={()=>handleDelete(list.id)}>Delete</button>
                             </td>
                         </tr>
@@ -68,6 +89,35 @@ function StudentList() {
                    </tbody>
             </table>
             <Toaster/>
+            <Modal isOpen={modal} toggle={()=>setModal(!modal)} centered size='lg'>
+                <ModalHeader toggle={()=>setModal(!modal)}>Edit Student</ModalHeader>
+                <ModalBody>
+                    <div className='container'>
+                    <div className='row'>
+                <div className='col-6'>
+                    <label class="form-label">First Name</label>
+                    <input type="text" class="form-control" name='firstName' value={studentEdit.firstName} onChange={(e) => handleChange(e)} />
+                </div>
+                <div className='col-6'>
+                    <label class="form-label">Last Name</label>
+                    <input type="text" class="form-control" name='lastName' value={studentEdit.lastName} onChange={(e) => handleChange(e)} />
+                </div>
+                <div className='col-6'>
+                    <label class="form-label">Email Name</label>
+                    <input type="email" class="form-control" name='email' value={studentEdit.email} onChange={(e) => handleChange(e)} />
+                </div>
+                <div className='col-6'>
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" name='password' value={studentEdit.password} onChange={(e) => handleChange(e)} />
+                </div>
+            </div>
+                    </div>
+                </ModalBody>
+                <ModalFooter>
+                    <button className='btn btn-sm btn-outline-danger mx-2' onClick={()=>setModal(!modal)}>Cancel</button>
+                    <button className='btn btn-sm btn-outline-success mx-2' onClick={()=>handleUpdate()}>Update</button>
+                </ModalFooter>
+            </Modal>
         </div>
     )
 }
