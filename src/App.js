@@ -12,6 +12,7 @@ import StudentList from './Components/StudentList';
 import StudentView from './Components/StudentView';
 import Features from './Components/Features';
 import { UseProvider } from './Context';
+import Calculator from './Components/Calculator';
 function App() {
   const result = [{
     Name: 'Dev Team',
@@ -49,6 +50,7 @@ function App() {
         <Route path='/form' element={<Form/>} />
         <Route path='/student' element={<StudentList/>} />
         <Route path='/student/:id' element={<StudentView/>} />
+        <Route path='/calculator' element={<Calculator/>} />
       </Routes>
       </UseProvider>
     </BrowserRouter>

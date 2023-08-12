@@ -12,7 +12,8 @@ function Form() {
         lastName: "",
         email: "",
         password: "",
-        flavour:[]
+        flavour:["vanilla"],
+        dummy:"vanilla"
     })
     const [list,setList]=useState([])
     // const [lastName,setLastName]=useState("")
@@ -84,7 +85,13 @@ function Form() {
                 </div>
                 <div className='col-6'>
                     <label class="form-label">Languages</label>
-                    <Select options={options} onChange={(e)=>handleSelectChange(e)} isMulti/>
+                    <Select isSearchable options={options} onChange={(e)=>handleSelectChange(e)} value={options.filter((e)=>{
+                        return data.flavour.some((op)=>op===e.value)
+                    })} isMulti/>
+                </div>
+                <div className='col-6'>
+                    <label class="form-label">Languages</label>
+                    <Select isClearable options={options} onChange={(e)=>handleSelectChange(e)} value={options.filter((e)=>e.value===data.dummy)}/>
                 </div>
             </div>
             <div className='mt-5'>

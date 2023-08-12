@@ -40,6 +40,11 @@ function Menu() {
                                 <a className="nav-link">Student</a>
                             </li>
                             </Link>
+                            <Link to={'/calculator'}>
+                            <li className="nav-item">
+                                <a className="nav-link">Calculator</a>
+                            </li>
+                            </Link>
                         </ul>
                     </div>
                 </div>
